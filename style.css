@@ -1,0 +1,48 @@
+.input-area {
+  display: flex;
+}
+.input-area .text-area {
+  flex: 0 0 90%;
+  min-height: 80vh;
+  padding: 20px;
+  border: 1px solid #333;
+}
+.input-area .editor {
+  flex: 0 0 50%;
+  border: 1px solid #cccccc;
+  border-left: 0;
+}
+.input-area .controls {
+  display: flex;
+  height: 60px;
+  border-bottom: 1px solid #cccccc;
+  padding: 0 20px;
+  align-items: center;
+  font-size: 14px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 50%;
+  background: #fff;
+}
+.input-area .controls label {
+  margin-right: 5px;
+  margin-bottom: 0;
+}
+.input-area .controls .form-control {
+  width: 100px;
+}
+.input-area .controls .description {
+  margin-left: 10px;
+}
+.input-area .preview {
+  margin-top: 60px;
+  padding: 20px;
+}
+.input-area .preview > *:hover {
+  background-color: #efefef;
+}
+
+.preview{
+  display: none;
+}

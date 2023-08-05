@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Multiline Quiz rows to single line</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app">
+  <div class="input-area">
+    <textarea id = "inputArea" v-model="input"
+              @paste="handlePaste"
+              class="text-area"
+              rows="20"
+              placeholder="Paste your word text here ...">
+    </textarea>
+    <div class="editor">
+      <!-- <div class="controls">
+         <label>Block Tag:</label>
+         <select class="form-control form-control-sm"
+                 v-model="selectedTag">
+           <option v-for="tag in tags">
+             {{ tag }}
+           </option>
+         </select>
+         <span class="description">
+           Click on element to convert it to selected tag.
+         </span>
+      </div> -->
+      <div ref="preview"
+           class="preview"
+           v-html="input"
+           @click="handleClick"></div>
+    </div>
+    
+  </div>
+  <br>
+  <!-- <button onclick="replaceAllOL()">All OL to UL</button> -->
+  <input type="button" value="All OL to UL" onclick="replaceAllOL()">
+  <input type="button" value="All <li><p> to <li>" onclick="replaceAllLiP()">
+  <input type="button" value="4 Multi Part Response" onclick="multiPartRespUpd()">
+  <input type="button" value="Add <br> with Answer:" onclick="addBrWithAns()">
+  <input type="button" value="Add <br> between <li>" onclick="addBrBtLI()">
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/sanitize-html@1.18.2/dist/sanitize-html.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
