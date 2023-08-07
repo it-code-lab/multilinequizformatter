@@ -42,20 +42,50 @@ new Vue({
           const matches = bodyRegex.exec(inputHtml);
           const bodyHtml = matches ? matches[1] : inputHtml;
 
-          var newInput = text1.replace("randomid", this.getRndInt(100000,999999)) + this.sanitize(bodyHtml) + text2;
-
-          newInput= this.replaceAllWithRandomId(newInput,'<pre><div>', text3 + '<div>');
-          newInput = this.replaceAllWithRandomId(newInput, '</div></pre>', '</div></code></pre>' + text4 );
+          let newInput = this.sanitize(bodyHtml);
+          //let newInput = bodyHtml;
 
 
+          newInput= this.replaceAllWithRandomId(newInput,'<pre><div><div>javaCopy code</div><div><code>', '<br><code>');
+          newInput= this.replaceAllWithRandomId(newInput,'</code></div></div></pre>', '</code><br>');
+          newInput= this.replaceAllWithRandomId(newInput,'<ol><li>', '');
+          newInput= this.replaceAllWithRandomId(newInput,'</li></ol>', '');
+          newInput= this.formatText(newInput);
 
-          newInput = this.replaceAll(newInput, 'Copy code</div>', '<div class="hideParentDiv"></div>Copy code</div><pre><code>');
+          //newInput= this.replaceAllWithRandomId(newInput,'A) ', '&#13;&#10;A) ');
+          //newInput= this.replaceAllWithRandomId(newInput,'b) ', '&#13;&#10;b) ');
+          //newInput= this.replaceAllWithRandomId(newInput,'c) ', '&#13;&#10;c) ');
+          //newInput= this.replaceAllWithRandomId(newInput,'d) ', '&#13;&#10;d) '); 
+          //newInput= this.replaceAllWithRandomId(newInput,'Answer:', '&#13;&#10;Answer:');
+
+
+          //let newInput = text1.replace("randomid", this.getRndInt(100000,999999)) + this.sanitize(bodyHtml) + text2;
+          //newInput= this.replaceAllWithRandomId(newInput,'<pre><div>', text3 + '<div>');
+          //newInput = this.replaceAllWithRandomId(newInput, '</div></pre>', '</div></code></pre>' + text4 );
+          //newInput = this.replaceAll(newInput, 'Copy code</div>', '<div class="hideParentDiv"></div>Copy code</div><pre><code>');
+
           this.input = newInput;
           navigator.clipboard.writeText(newInput);
 
         }
       }
     },
+    formatText(inputText) {
+      // Rule 1: Start new line for specific patterns
+      const newLinePatterns = /(^|\n)(A\)|B\)|C\)|D\)|Answer: )/g;
+      const formattedText = inputText.replace(newLinePatterns, '\n$2');
+  
+      // Rule 2: Remove extra new lines
+      const condensedText = formattedText.replace(/\n{2,}/g, '\n');
+  
+      // Rule 3: Retain spacing inside <code> tags
+      const codeBlockPatterns = /<code>.*?<\/code>/gs;
+      const modifiedText = condensedText.replace(codeBlockPatterns, match => {
+          return match.replace(/\n/g, '<br>');
+      });
+  
+      return modifiedText;
+  },
     handleClick (e) {
       // let el = e.target;
       // let newChild = document.createElement(this.selectedTag);
@@ -107,6 +137,8 @@ new Vue({
 
     return inputString;
     },
+
+
     getRndInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1) ) + min;
     }
