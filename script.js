@@ -72,16 +72,26 @@ new Vue({
     },
     formatText(inputText) {
       // Rule 1: Start new line for specific patterns
-      const newLinePatterns = /(^|\n)(A\)|B\)|C\)|D\)|Answer: )/g;
-      const formattedText = inputText.replace(newLinePatterns, '\n$2');
-  
+      //const newLinePatterns = /(^|\n)(A\)|B\)|C\)|D\)|Answer: )/g;
+      //const newLinePatterns = /(?:<br \/>|)(A\)|B\)|C\)|D\)|Answer: )/g;
+      const newLinePatterns = /(A\)|B\)|C\)|D\)|Answer: )/g;
+
+
+      const formattedText = inputText.replace(newLinePatterns, '\r\n$1');
+
       // Rule 2: Remove extra new lines
-      const condensedText = formattedText.replace(/\n{2,}/g, '\n');
+      const condensedText = formattedText.replace(/\r\n{2,}/g, '\r\n');
   
       // Rule 3: Retain spacing inside <code> tags
       const codeBlockPatterns = /<code>.*?<\/code>/gs;
+      
+      //const modifiedText = condensedText.replace(codeBlockPatterns, match => {
+      //    return match.replace(/\n/g, '<br>');
+      //});
+
       const modifiedText = condensedText.replace(codeBlockPatterns, match => {
-          return match.replace(/\n/g, '<br>');
+        const preservedSpaces = match.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+        return preservedSpaces;
       });
   
       return modifiedText;
